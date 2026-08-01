@@ -19,6 +19,7 @@ Pastikan sudah mendapat izin : apply the appropriate service account permissions
 ### Langkah 2: Buat Koneksi Cloud Resource (Cloud Resource Connection)
 
 Run query berikut:
+
     ```
     CREATE CONNECTION IF NOT EXISTS `us.user_data_connection`
     OPTIONS (
