@@ -10,11 +10,11 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
 2. Di panel penjelajah (Explorer), klik ikon tiga titik di sebelah ID Project Anda, lalu pilih **Create dataset**.
 3. Atur konfigurasi berikut:
    * **Dataset ID:** `online_shop`
-   * **Data location:** Pilih `United States (US)` (Multi-region).
+   * **Data location:** Pilih `US (multiple rgion in United States)`.
 4. Klik **Create dataset**.
 
 ### Langkah 2: Buat Koneksi Cloud Resource (Cloud Resource Connection)
-1. Di BigQuery Studio, klik tombol **+ ADD** di bagian atas panel Explorer.
+1. Di BigQuery Studio, klik Explorer kemudian klik tombol **+ Add data**.
 2. Pilih **Connections to external data sources**.
 3. Atur konfigurasi koneksi:
    * **Connection type:** `Vertex AI plugins, BigLake and remote functions (Cloud Resource)`
@@ -54,26 +54,29 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
 ## Tugas 2. Membuat, Menerapkan, dan Memverifikasi Aspect pada Kolom Sensitif
 
 ### Langkah 1: Buat Tag Template (Sensitive Data Aspect)
-1. Buka menu **Dataplex** > **Manage** > **Tag Templates** (atau cari "Dataplex Tag Templates" di kolom pencarian).
-2. Klik **Create Tag Template**.
-3. Atur konfigurasi template:
-   * **Template display name:** `Sensitive Data Aspect`
-   * **Template ID:** `sensitive_data_aspect` (otomatis terisi)
-   * **Location:** Pilih `us (united states)`.
-4. Tambahkan *field* baru dengan klik **Add field**:
-   * **Field display name:** `Has Sensitive Data`
-   * **Field ID:** `has_sensitive_data`
+1. //Buka menu **Dataplex** > **Manage** > **Tag Templates** (atau cari "Dataplex Tag Templates" di kolom pencarian).
+2. //Klik **Create Tag Template**.
+---
+3.  **Knowledge Catalog/Aspect types** >> menu **Metadata types**
+4. Pada Metadata types, kolom **Aspect types** klik **+Create**
+5. Atur **Details** konfigurasi template:
+   * **Display name:** `Sensitive Data Aspect`
+   * **Aspect type ID:** `sensitive_data_aspect` (terisi otomatis)
+   * **Location:** Pilih `US (multiple in united states)`.
+5. Tambahkan *field* baru dengan klik **Add field**:
+   * Field **Display name:** `Has Sensitive Data`
+   * **Name:** `has_sensitive_data` (terisi otomatis)
    * **Type:** Pilih `Boolean`.
-5. Klik **Create**.
+6. Klik **Create**.
 
 ### Langkah 2: Terapkan Tag ke Kolom yang Ditentukan
 1. Kembali ke **BigQuery Studio**.
-2. Cari dan klik tabel `online_shop.user_online_sessions`.
+2. Cari pada Search bar tabel `online_shop` dan klik `user_online_sessions`.
 3. Buka tab **Schema**.
-4. Cari kolom pertama yang diminta: `zip`.
-5. Klik tombol **+ ADD TAG** di baris kolom `zip` tersebut.
+4. Cari kolom pertama yang diminta: `zip`, kemudian centang.
+5. Klik tombol **+ Add aspect** di atas.
 6. Pilih template **Sensitive Data Aspect** yang baru saja Anda buat.
-7. Di bagian *field* `Has Sensitive Data`, ubah nilainya menjadi **True**.
+7. Di bagian **Protected Data Flag**, pilih nilai **Yes**.
 8. Klik **Save**.
 9. Ulangi proses penambahan tag (Langkah 4-8) di atas untuk tiga kolom lainnya:
    * `latitude`
