@@ -60,10 +60,9 @@ Catat!:
 ## Tugas 2. Membuat, Menerapkan, dan Memverifikasi Aspect pada Kolom Sensitif
 
 ### Langkah 1: Buat Tag Template (Sensitive Data Aspect)
-1. //Buka menu **Dataplex** > **Manage** > **Tag Templates** (atau cari "Dataplex Tag Templates" di kolom pencarian).
-2. //Klik **Create Tag Template**.
----
-3.  **Knowledge Catalog/Aspect types** >> menu **Metadata types**
+1. Buka atau klik pencarian utama pada bar paling atas Google Cloud
+2. Ketikkan pada pencarian `Knowledge Catalog`
+3. Cari menu **Metadata types**
 4. Pada Metadata types, kolom **Aspect types** klik **+Create**
 5. Atur **Details** konfigurasi template:
    * **Display name:** `Sensitive Data Aspect`
