@@ -13,22 +13,27 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
    * **Data location:** Pilih `US (multiple rgion in United States)`.
 4. Klik **Create dataset**.
 
+Pastikan sudah mendapat izin : apply the appropriate service account permissions to read Cloud Storage files in your project.
+
+
 ### Langkah 2: Buat Koneksi Cloud Resource (Cloud Resource Connection)
-1. Di BigQuery Studio, klik Explorer kemudian klik tombol **+ Add data**.
-2. Pilih **Connections to external data sources**.
-3. Atur konfigurasi koneksi:
-   * **Connection type:** `Vertex AI plugins, BigLake and remote functions (Cloud Resource)`
-   * **Connection ID:** `user_data_connection`
-   * **Location type:** Pilih `Multi-region`.
-   * **Region:** Pilih `United States (US)`.
-4. Klik **Create connection**.
-5. Setelah koneksi dibuat, klik **Go to connection**.
-6. Salin **Service account ID** yang tertera di detail koneksi (Format: `bqcx-xxxxxxxxxxxx-xxxx@://gserviceaccount.com`).
+
+Run query berikut:
+    ```
+    CREATE CONNECTION IF NOT EXISTS `us.user_data_connection`
+    OPTIONS (
+      connection_type = "CLOUD_RESOURCE"
+    );
+    ```
+    
+Catat!:
+    Service account id seperti: `bqcx-983519862653-viev@gcp-sa-bigquery-condel.iam.gserviceaccount.com`
+    
 
 ### Langkah 3: Berikan Izin IAM ke Service Account Koneksi
 1. Buka menu **IAM & Admin** > **IAM**.
 2. Klik **Grant Access**.
-3. Di kolom **New principals**, tempel (*paste*) Service Account ID yang sudah Anda salin sebelumnya.
+3. Di kolom **New principals**, tempel (*paste*) `Service Account ID` yang sudah Anda salin sebelumnya.
 4. Di kolom **Select a role**, cari dan pilih **Storage Object Viewer**.
 5. Klik **Save**.
 
@@ -37,9 +42,9 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
 2. Di bawah dataset `online_shop`, klik tiga titik dan pilih **Create table**.
 3. Atur konfigurasi pembuatan tabel:
    * **Create table from:** `Google Cloud Storage`
-   * **Select file from GCS bucket:** Masukkan path file Anda (Ganti `[PROJECT_ID]` dengan ID proyek Anda):
+   * **Select file from GCS bucket:** pilih/browse file csv:
      ```text
-     gs://[PROJECT_ID]-bucket/user-online-sessions.csv
+     user-online-sessions.csv
      ```
    * **File format:** `CSV`
    * **Table type:** Pilih **External table**.
@@ -62,21 +67,22 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
 5. Atur **Details** konfigurasi template:
    * **Display name:** `Sensitive Data Aspect`
    * **Aspect type ID:** `sensitive_data_aspect` (terisi otomatis)
-   * **Location:** Pilih `US (multiple in united states)`.
+   * **Location:** Pilih `us (multiple regions in united states)`.
 5. Tambahkan *field* baru dengan klik **Add field**:
    * Field **Display name:** `Has Sensitive Data`
    * **Name:** `has_sensitive_data` (terisi otomatis)
    * **Type:** Pilih `Boolean`.
+   * **Is Required** dicentang
 6. Klik **Create**.
 
 ### Langkah 2: Terapkan Tag ke Kolom yang Ditentukan
-1. Kembali ke **BigQuery Studio**.
-2. Cari pada Search bar tabel `online_shop` dan klik `user_online_sessions`.
-3. Buka tab **Schema**.
+1. Kembali ke **Knowledge Catalog** cari melalui pencarian utama Google Cloud paling atas tengah.
+2. Setelah itu pada Search bar cari dengan mengetik: `user_online_sessions`.
+3. Pilih/klik `user_online_sessions`, kemudian buka tab **Schema**.
 4. Cari kolom pertama yang diminta: `zip`, kemudian centang.
 5. Klik tombol **+ Add aspect** di atas.
 6. Pilih template **Sensitive Data Aspect** yang baru saja Anda buat.
-7. Di bagian **Protected Data Flag**, pilih nilai **Yes**.
+7. Di bagian `Add "Sensitive Data Aspect" `, pilih nilai **True**.
 8. Klik **Save**.
 9. Ulangi proses penambahan tag (Langkah 4-8) di atas untuk tiga kolom lainnya:
    * `latitude`
@@ -89,10 +95,18 @@ Dokumen ini berisi panduan langkah demi langkah untuk menyelesaikan tugas pembua
 
 ### Langkah 1: Bersihkan Izin Akses Pengguna
 1. Buka menu **IAM & Admin** > **IAM**.
-2. Cari pengguna bernama **User 2** di daftar *principals*.
+2. Cari pengguna bernama **User 2** seperti: `student-01-01eb2d469292@qwiklabs.net` sebagaimana pada petunjuk pada task ini, di daftar *principals*. Bukan user aktif student Anda!.
 3. Klik ikon pensil (**Edit principal**) di sebelah kanan baris nama User 2.
 4. Di daftar peran (*roles*), temukan peran yang berkaitan dengan Cloud Storage (seperti `Storage Admin`, `Storage Object Admin`, atau `Storage Object Viewer`).
-5. Klik ikon **Tempat Sampah (Delete)** hanya pada peran Cloud Storage tersebut untuk menghapusnya.
-6. **Pastikan:** Jangan menghapus peran `Project Viewer` atau peran tingkat proyek lainnya milik User 2.
-7. Klik **Save**.
+
+Sebelum menghapus, **perhatian perintah pada task ini**,
+dalam contoh ini adalah hanya 'menghapus role Cloud Storage' dan membiarkan role project viewer
+
+    ```
+    - Leave the IAM role for project viewer.
+    - Remove only the IAM role for Cloud Storage.
+    ```
+    
+5. Klik ikon **Tempat Sampah (Delete)** disamping role yang akan dihapus.
+6. Klik **Save**
 
